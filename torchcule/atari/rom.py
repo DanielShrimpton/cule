@@ -7,13 +7,23 @@ on the CPU or GPU.
 import atari_py
 import gym
 import os
+import site
 
 from torchcule_atari import AtariRom
+
+def get_rom(roms_path, env_name):
+    roms = [os.path.splitext(rom)[0] for rom in os.listdir(roms_path) if '.bin' in rom]
+    for rom in roms:
+        if rom.lower() in env_name.lower():
+            return rom + '.bin'
 
 class Rom(AtariRom):
 
     def __init__(self, env_name):
-        game_path = gym.make(env_name).env.game_path
+        # game_path = gym.make(env_name).env.game_path
+        roms_path = os.path.join(site.getsitepackages()[0], 'AutoROM', 'roms')
+        rom = get_rom(roms_path, env_name)
+        game_path = os.path.join(roms_path, rom)
         if not os.path.exists(game_path):
             raise IOError('Requested environment (%s) does not exist '
                           'in valid list of environments:\n%s' \
