@@ -12,18 +12,22 @@ import site
 from torchcule_atari import AtariRom
 
 def get_rom(roms_path, env_name):
-    roms = [os.path.splitext(rom)[0] for rom in os.listdir(roms_path) if '.bin' in rom]
+    # roms = [os.path.splitext(rom)[0] for rom in os.listdir(roms_path) if '.bin' in rom]
+    roms = atari_py.list_games()
     for rom in roms:
         if env_name.lower().startswith(rom.lower().replace('_', '')):
-            return rom + '.bin'
+            # return rom + '.bin'
+            return atari_py.get_game_path(rom)
 
 class Rom(AtariRom):
 
     def __init__(self, env_name):
-        # game_path = gym.make(env_name).env.game_path
-        roms_path = os.path.join(site.getsitepackages()[0], 'AutoROM', 'roms')
-        rom = get_rom(roms_path, env_name)
-        game_path = os.path.join(roms_path, rom)
+        # # game_path = gym.make(env_name).env.game_path
+        # roms_path = os.path.join(site.getsitepackages()[0], 'AutoROM', 'roms')
+        # rom = get_rom(roms_path, env_name)
+        # game_path = os.path.join(roms_path, rom)
+        roms_path = atari_py.games.get_games_dir()
+        game_path = get_rom(roms_path, env_name)
         if not os.path.exists(game_path):
             raise IOError('Requested environment (%s) does not exist '
                           'in valid list of environments:\n%s' \
