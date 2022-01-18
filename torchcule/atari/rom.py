@@ -14,7 +14,7 @@ from torchcule_atari import AtariRom
 def get_rom(roms_path, env_name):
     roms = [os.path.splitext(rom)[0] for rom in os.listdir(roms_path) if '.bin' in rom]
     for rom in roms:
-        if rom.lower() in env_name.lower():  # TODO change to using regex with beginning of line so pacman isn't in mspacman e.g.
+        if env_name.lower().startswith(rom.lower().replace('_', '')):
             return rom + '.bin'
 
 class Rom(AtariRom):
