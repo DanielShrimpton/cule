@@ -37,7 +37,7 @@ any Maxwell-, Pascal-, Volta-, and Turing-architecture NVIDIA GPUs.
 # Building CuLE
 
 ```
-$ git clone --recursive https://github.com/NVlabs/cule
+$ git clone --recursive https://github.com/DanielShrimpton/cule
 $ python setup.py install
 ```
 
