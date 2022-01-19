@@ -11,7 +11,8 @@ from examples.utils.runtime import Runtime
 
 codes = [arch[-2] + '0' for arch in torch.cuda.get_arch_list()]
 # codes = ['60', '70', '80']
-codes = codes.remove('30')
+if '30' in codes:
+    codes = codes.remove('30')
 arch_gencode = ['-arch=sm_' + codes[0]] + ['-gencode=arch=compute_{0},code=sm_{0}'.format(code) for code in codes]
 
 base_dir = os.path.dirname(os.path.realpath(__file__))
