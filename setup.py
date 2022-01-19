@@ -10,7 +10,8 @@ from setuptools import find_packages, setup, Extension
 from examples.utils.runtime import Runtime
 
 codes = [arch[-2] + '0' for arch in torch.cuda.get_arch_list()]
-codes = ['60', '70', '80']
+# codes = ['60', '70', '80']
+codes = codes.remove('30')
 arch_gencode = ['-arch=sm_' + codes[0]] + ['-gencode=arch=compute_{0},code=sm_{0}'.format(code) for code in codes]
 
 base_dir = os.path.dirname(os.path.realpath(__file__))
